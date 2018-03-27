@@ -30,8 +30,8 @@ type LinkedList struct {
 }
 
 // Print LinkedList
-func (list *LinkedList) print() {
-	currentNode := list.head
+func (l *LinkedList) print() {
+	currentNode := l.head
 
 	if currentNode != nil {
 		fmt.Printf("List elements: ")
@@ -43,54 +43,49 @@ func (list *LinkedList) print() {
 	}
 }
 
-// Insert new value at the end of the linked list
-func (list *LinkedList) insert(val interface{}) {
-	var newNode = Node{
-		value: val,
-		next:  nil,
-	}
-
-	if list.head == nil {
-		list.head = &newNode
+// Insert new node at the end of the linked list
+func (l *LinkedList) insert(n *Node) {
+	if l.head == nil {
+		l.head = n
 	} else {
-		list.tail.next = &newNode
+		l.tail.next = n
 	}
-	list.tail = &newNode
-	list.length++
+	l.tail = n
+	l.length++
 }
 
 // Insert new value at the given position
-func (list *LinkedList) insertAt(position int, val interface{}) {
+func (l *LinkedList) insertAt(pos int, n *Node) {
 	// If the given position is lower than the list length
 	// the element will be inserted at the end of the list
-	if list.length < position {
-		list.insert(val)
-	} else {
-		currentNode := list.head
+	switch {
+	case l.length < pos:
+		l.insert(n)
+	case pos == 1:
+		n.next = l.head
+		l.head = n
+	default:
+		currentNode := l.head
 		// Position - 2 since we want the element replacing the given position
-		for i := 0; i < (position - 2); i++ {
+		for i := 1; i < (pos - 1); i++ {
 			currentNode = currentNode.next
 		}
-
-		var newNode = Node{
-			value: val,
-			next:  currentNode.next,
-		}
-
-		currentNode.next = &newNode
-		list.length++
+		n.next = currentNode.next
+		currentNode.next = n
 	}
+
+	l.length++
 }
 
 // Get value in the given position
-func (list *LinkedList) get(position int) interface{} {
-	if position > list.length {
+func (l *LinkedList) get(pos int) interface{} {
+	if pos > l.length {
 		return nil
 	}
 
-	currentNode := list.head
+	currentNode := l.head
 	// Position - 1 since we want the value in the given position
-	for i := 0; i < position-1; i++ {
+	for i := 0; i < pos-1; i++ {
 		currentNode = currentNode.next
 	}
 
@@ -98,48 +93,54 @@ func (list *LinkedList) get(position int) interface{} {
 }
 
 // Delete value at the given position
-func (list *LinkedList) delete(position int) bool {
-	if position > list.length {
+func (l *LinkedList) delete(pos int) bool {
+	if pos > l.length {
 		return false
 	}
 
-	currentNode := list.head
-	if position == 1 {
-		list.head = currentNode.next
+	currentNode := l.head
+	if pos == 1 {
+		l.head = currentNode.next
 	} else {
-		for i := 1; i < position-1; i++ {
+		for i := 1; i < pos-1; i++ {
 			currentNode = currentNode.next
 		}
 		currentNode.next = currentNode.next.next
 	}
-	list.length--
+	l.length--
 	return true
 }
 
+// Each method to apply function to each element in the linked list
+func (l *LinkedList) each() {
+	// To be implemented!
+}
+
 func main() {
-	var list LinkedList
-	list.insert(1)
-	list.insert(2)
-	list.insert(3)
-	list.insert(4)
-	list.insert(5)
-	list.insert(6)
-	list.insert(7)
-	list.insert(8)
-	list.insert(9)
-	list.print()
-	fmt.Println(list.length)
-	list.insertAt(2, 81)
-	list.insertAt(4, 81)
-	list.insertAt(6, 81)
-	list.insertAt(16, 81)
-	list.print()
-	fmt.Println(list.length)
-	fmt.Println(list.get(2))
-	fmt.Println(list.get(4))
-	fmt.Println(list.get(6))
-	list.delete(1)
-	list.print()
-	list.delete(2)
-	list.print()
+	var l LinkedList
+	l.insert(&Node{value: 1})
+	l.insert(&Node{value: 2})
+	l.insert(&Node{value: 3})
+	l.insert(&Node{value: 4})
+	l.insert(&Node{value: 5})
+	l.insert(&Node{value: 6})
+	l.insert(&Node{value: 7})
+	l.insert(&Node{value: 8})
+	l.insert(&Node{value: 9})
+	l.print()
+	fmt.Println(l.length)
+	l.insertAt(2, &Node{value: "Element"})
+	l.insertAt(4, &Node{value: "Element"})
+	l.insertAt(6, &Node{value: "Element"})
+	l.insertAt(16, &Node{value: "Element"})
+	l.print()
+	fmt.Println(l.length)
+	l.delete(2)
+	l.print()
+	l.delete(3)
+	l.print()
+	l.delete(4)
+	l.print()
+	l.delete(10)
+	l.print()
 }
