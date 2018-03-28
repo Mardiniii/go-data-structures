@@ -10,26 +10,9 @@ type Stack struct {
 
 // Getters
 
-// Top method to return the current top node
-func (s *Stack) Top() *Node {
-	return s.top
-}
-
 // Length method to return the stack length
 func (s *Stack) Length() int {
 	return s.length
-}
-
-// Setters
-
-// SetTop method to set the top
-func (s *Stack) SetTop(n *Node) {
-	s.top = n
-}
-
-// SetLength method to set the top
-func (s *Stack) SetLength(length int) {
-	s.length = length
 }
 
 // Stack structure methods
@@ -38,32 +21,32 @@ func (s *Stack) SetLength(length int) {
 func (s *Stack) Push(val interface{}) {
 	n := &Node{value: val}
 
-	if s.Top() == nil {
-		s.SetTop(n)
+	if s.top == nil {
+		s.top = n
 	} else {
-		n.SetPrevious(s.Top())
-		s.SetTop(n)
+		n.SetPrevious(s.top)
+		s.top = n
 	}
 
-	s.SetLength(s.Length() + 1)
+	s.length = s.length + 1
 }
 
 // Pop method to remove val at the top of the stack
 func (s *Stack) Pop() interface{} {
-	if s.Top() == nil {
+	if s.top == nil {
 		return nil
 	}
-	currentTop := s.Top()
-	s.SetTop(currentTop.Previous())
+	currentTop := s.top
+	s.top = currentTop.Previous()
 	currentTop.SetPrevious(nil)
-	s.SetLength(s.Length() - 1)
+	s.length = s.length - 1
 
 	return currentTop.Value()
 }
 
 // Print method to print the Stack
 func (s *Stack) Print() {
-	for n := s.Top(); n != nil; n = n.Previous() {
+	for n := s.top; n != nil; n = n.Previous() {
 		fmt.Println(n.Value())
 	}
 }
