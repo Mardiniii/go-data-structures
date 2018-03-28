@@ -10,12 +10,12 @@ func main() {
 	s.Push(4)
 	s.Push(5)
 	s.Print()
-	fmt.Println("Stack Length:", s.Length)
+	fmt.Println("Stack Length:", s.Length())
 
 	s.Pop()
 	s.Pop()
 	s.Pop()
 
 	s.Print()
-	fmt.Println("Stack Length:", s.Length)
+	fmt.Println("Stack Length:", s.Length())
 }
