@@ -9,11 +9,6 @@ type Node struct {
 
 // Getters
 
-// Next method to return the next node if exists
-func (n *Node) Next() *Node {
-	return n.next
-}
-
 // Previous method to return the previous node if exists
 func (n *Node) Previous() *Node {
 	return n.previous
@@ -34,9 +29,4 @@ func (n *Node) SetNext(next *Node) {
 // SetPrevious method to set the previous node
 func (n *Node) SetPrevious(previous *Node) {
 	n.previous = previous
-}
-
-// SetValue method to set the value
-func (n *Node) SetValue(val interface{}) {
-	n.value = val
 }
