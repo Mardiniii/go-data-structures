@@ -24,8 +24,3 @@ func (n *Node) Next() *Node {
 func (n *Node) SetNext(next *Node) {
 	n.next = next
 }
-
-// SetValue method to set the value
-func (n *Node) SetValue(val interface{}) {
-	n.value = val
-}

@@ -19,36 +19,9 @@ type LinkedList struct {
 
 // Getters
 
-// Head method to return the head node
-func (l *LinkedList) Head() *Node {
-	return l.head
-}
-
-// Tail method to return the tail node
-func (l *LinkedList) Tail() *Node {
-	return l.tail
-}
-
 // Length method to return the list length
 func (l *LinkedList) Length() int {
 	return l.length
-}
-
-// Setters
-
-// SetHead method to set the head node
-func (l *LinkedList) SetHead(n *Node) {
-	l.head = n
-}
-
-// SetTail method to set the head node
-func (l *LinkedList) SetTail(n *Node) {
-	l.tail = n
-}
-
-// SetLength method to set the head node
-func (l *LinkedList) SetLength(length int) {
-	l.length = length
 }
 
 // Linked list structure methods
@@ -57,13 +30,13 @@ func (l *LinkedList) SetLength(length int) {
 func (l *LinkedList) Insert(val interface{}) {
 	n := &Node{value: val}
 
-	if l.Head() == nil {
-		l.SetHead(n)
+	if l.head == nil {
+		l.head = n
 	} else {
-		l.Tail().SetNext(n)
+		l.tail.SetNext(n)
 	}
-	l.SetTail(n)
-	l.SetLength(l.Length() + 1)
+	l.tail = n
+	l.length = l.length + 1
 }
 
 // InsertAt method adds a new value at the given position
@@ -72,13 +45,13 @@ func (l *LinkedList) InsertAt(pos int, val interface{}) {
 	// If the given position is lower than the list length
 	// the element will be inserted at the end of the list
 	switch {
-	case l.Length() < pos:
+	case l.length < pos:
 		l.Insert(val)
 	case pos == 1:
-		n.SetNext(l.Head())
-		l.SetHead(n)
+		n.SetNext(l.head)
+		l.head = n
 	default:
-		node := l.Head()
+		node := l.head
 		// Position - 2 since we want the element replacing the given position
 		for i := 1; i < (pos - 1); i++ {
 			node = node.Next()
@@ -87,16 +60,16 @@ func (l *LinkedList) InsertAt(pos int, val interface{}) {
 		node.SetNext(n)
 	}
 
-	l.SetLength(l.Length() + 1)
+	l.length = l.length + 1
 }
 
 // Get value in the given position
 func (l *LinkedList) Get(pos int) interface{} {
-	if pos > l.Length() {
+	if pos > l.length {
 		return nil
 	}
 
-	node := l.Head()
+	node := l.head
 	// Position - 1 since we want the value in the given position
 	for i := 0; i < pos-1; i++ {
 		node = node.Next()
@@ -107,36 +80,36 @@ func (l *LinkedList) Get(pos int) interface{} {
 
 // Delete value at the given position
 func (l *LinkedList) Delete(pos int) bool {
-	if pos > l.Length() {
+	if pos > l.length {
 		return false
 	}
 
-	node := l.Head()
+	node := l.head
 	if pos == 1 {
-		l.SetHead(node.Next())
+		l.head = node.Next()
 	} else {
 		for i := 1; i < pos-1; i++ {
 			node = node.Next()
 		}
 		node.SetNext(node.Next().Next())
 	}
-	l.SetLength(l.Length() - 1)
+	l.length = l.length - 1
 	return true
 }
 
 // Each method to apply to each element in the linked list a
 // function who receives an interface and don't return any value
 func (l *LinkedList) Each(f func(val interface{})) {
-	for n := l.Head(); n != nil; n = n.Next() {
+	for n := l.head; n != nil; n = n.Next() {
 		f(n.Value())
 	}
 }
 
 // Print LinkedList
 func (l *LinkedList) Print() {
-	if l.Head() != nil {
+	if l.head != nil {
 		fmt.Printf("List elements: ")
-		for node := l.Head(); node != nil; node = node.Next() {
+		for node := l.head; node != nil; node = node.Next() {
 			fmt.Printf("%+v ", node.Value())
 		}
 		fmt.Println()
