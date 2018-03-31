@@ -38,4 +38,8 @@ func main() {
 	t.Delete(1)
 	t.Print()
 	fmt.Println("Tree Size:", t.Size())
+
+	t.Each(func(val interface{}) {
+		fmt.Println("Element:", val)
+	})
 }
