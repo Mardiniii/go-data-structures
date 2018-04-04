@@ -40,16 +40,3 @@ func (n *Node) SetRight(right *Node) {
 func (n *Node) SetValue(val interface{}) {
 	n.value = val
 }
-
-// Node structure methods
-
-// RecursiveInsert method to add a new node with left priority
-// func (n *Node) RecursiveInsert(val interface{}) {
-// 	if n.left == nil {
-// 		n.left = &Node{value: val}
-// 	} else if n.right == nil {
-// 		n.right = &Node{value: val}
-// 	} else {
-// 		n.left.RecursiveInsert(val)
-// 	}
-// }
