@@ -1,5 +1,11 @@
 package main
 
+import "fmt"
+
+func print(v int) {
+	fmt.Println(v)
+}
+
 func main() {
 	leafOne := Node{
 		values: []int{1, 2},
@@ -36,4 +42,5 @@ func main() {
 	b.Exists(83)
 	b.Exists(0)
 	b.Exists(170)
+	b.Each(print)
 }
